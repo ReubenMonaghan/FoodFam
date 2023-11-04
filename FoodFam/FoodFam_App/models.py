@@ -14,7 +14,7 @@ class Profile(models.Model):
 class Recipe(models.Model):
     title = models.CharField(max_length=50)
     ingredients = models.JSONField()
-    instructions = models.TextField(max_length=50)
+    instructions = models.TextField(max_length=4000)
     date_created = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
     owner = models.ForeignKey('auth.user', related_name='recipes', on_delete=models.CASCADE)
@@ -42,7 +42,3 @@ class Group(models.Model):
     # https://docs.djangoproject.com/en/4.2/topics/db/examples/many_to_many/
     admins = models.ManyToManyField('auth.user', related_name='group_admins')
     members = models.ManyToManyField('auth.user', related_name='group_members')
-
-# from FoodFam_App.models import *
-# from FoodFam_App.serializers import *
-# from django.utils import timezone
