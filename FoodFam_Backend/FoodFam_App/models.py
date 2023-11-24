@@ -7,13 +7,26 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 class Profile(models.Model):
     # use auth_user for username, password, email and other details in the table.
     # use this model only for items not already in the auth_user
+    #Learing oppertunity, use AWS S3 to store images.
     profile_picture = models.ImageField(upload_to='profile_pictures/')
     user = models.ForeignKey('auth.user', related_name='profile', on_delete=models.CASCADE)
 
+class Ingredient(models.Model):
+    name = models.CharField(max_length=125)
+
+
+class MeasurementUnit(models.Model):
+    name = models.CharField(max_length=50)
+
+class RecipeIngredient(models.Model):
+    recipe = models.ForeignKey('Recipe', on_delete=models.CASCADE)
+    ingredient = models.ForeignKey('Ingredient', on_delete=models.CASCADE)
+    measurement_unit = models.ForeignKey('MeasurementUnit', on_delete=models.CASCADE)
+    quantity = models.IntegerField()
 
 class Recipe(models.Model):
     title = models.CharField(max_length=50)
-    ingredients = models.JSONField()
+    ingredients = models.ManyToManyField('Ingredient', through='RecipeIngredient')
     instructions = models.TextField(max_length=4000)
     date_created = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)

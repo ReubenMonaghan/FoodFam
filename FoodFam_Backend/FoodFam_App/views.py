@@ -20,12 +20,13 @@ class RecipeViewSet(viewsets.ModelViewSet):
     This viewset automatically provides `list`, `create`, `retrieve`,
     `update` and `destroy` actions.
 
-    Additionally we also provide an extra `highlight` action.
+    you can write stuff in here as a note in views.py
     """
     queryset = Recipe.objects.all()
     serializer_class = RecipeSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
+# this is an example of how to add extra functionality to a DRF view from the DRF tutorial
 #    @action(detail=True, renderer_classes=[renderers.StaticHTMLRenderer])
 #    def highlight(self, request, *args, **kwargs):
 #        snippet = self.get_object()

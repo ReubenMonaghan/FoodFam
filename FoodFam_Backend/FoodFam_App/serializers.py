@@ -1,12 +1,30 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from .models import Recipe, Comment, Rating, Group
+from .models import Ingredient, MeasurementUnit, RecipeIngredient, Recipe, Comment, Rating, Group
 
+class IngredientSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Ingredient
+        fields = ['id', 'name']
+
+class MeasurementUnitSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = MeasurementUnit
+        fields = ['id', 'name']
+
+class RecipeIngredientSerializer(serializers.ModelSerializer):
+    # ingredient and measurement_unit are nested serializers
+    ingredient = IngredientSerializer()
+    measurement_unit = MeasurementUnitSerializer()
+    class Meta:
+        model = RecipeIngredient
+        fields = ['id', 'recipe', 'ingredient', 'measurement_unit', 'quantity']
 
 class RecipeSerializer(serializers.ModelSerializer):
     owner = serializers.ReadOnlyField(source='owner.username')
     comments = serializers.PrimaryKeyRelatedField(many=True, queryset=Comment.objects.all())
     ratings = serializers.PrimaryKeyRelatedField(many=True, queryset=Rating.objects.all())
+    ingredients = RecipeIngredientSerializer(many=True)
     class Meta:
         model = Recipe
         fields = ['id', 'title', 'ingredients', 'instructions', 'date_created', 'date_updated',
