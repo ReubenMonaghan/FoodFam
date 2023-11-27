@@ -10,6 +10,7 @@ from .serializers import *
 class UserViewSet(viewsets.ReadOnlyModelViewSet):
     """
     This viewset automatically provides `list` and `retrieve` actions.
+    https://www.django-rest-framework.org/api-guide/viewsets/
     """
     queryset = User.objects.all()
     serializer_class = UserSerializer
@@ -19,6 +20,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
     """
     This viewset automatically provides `list`, `create`, `retrieve`,
     `update` and `destroy` actions.
+    https://www.django-rest-framework.org/api-guide/viewsets/
 
     you can write stuff in here as a note in views.py
     """

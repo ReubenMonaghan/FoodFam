@@ -14,11 +14,27 @@ class MeasurementUnitSerializer(serializers.ModelSerializer):
 
 class RecipeIngredientSerializer(serializers.ModelSerializer):
     # ingredient and measurement_unit are nested serializers
-    ingredient = IngredientSerializer()
-    measurement_unit = MeasurementUnitSerializer()
+    #ingredient = IngredientSerializer(source='Ingredient', many=True)
+    bob = serializers.SerializerMethodField()
+
+    #measurement_unit = MeasurementUnitSerializer(many=True)
+    #measurement_units = serializers.SerializerMethodField()
     class Meta:
         model = RecipeIngredient
-        fields = ['id', 'recipe', 'ingredient', 'measurement_unit', 'quantity']
+        fields = ['id', 'bob'] # ['id', 'recipe', 'ingredient', 'measurement_unit', 'quantity', 'ingredient_items']
+
+    def get_bob(self, obj):
+        recipe_ingredients_query = Ingredient.objects.filter(id=obj.id)
+        #measurement_units_query = MeasurementUnit.objects.filter(id=obj.id)
+        #return self.measurement_unit
+        serializer = IngredientSerializer(recipe_ingredients_query, many=True)
+        #MeasurementUnitSerializer(measurement_units_query, many=True)
+        return serializer.data
+
+    def get_measurement_units(self, obj):
+        measurement_units_query = MeasurementUnit.objects.filter(id=obj.id)
+        serializer = MeasurementUnitSerializer(measurement_units_query, many=True)
+        return serializer.data
 
 class RecipeSerializer(serializers.ModelSerializer):
     owner = serializers.ReadOnlyField(source='owner.username')
@@ -29,6 +45,7 @@ class RecipeSerializer(serializers.ModelSerializer):
         model = Recipe
         fields = ['id', 'title', 'ingredients', 'instructions', 'date_created', 'date_updated',
                   'owner', 'comments', 'ratings']
+
 
 class UserSerializer(serializers.ModelSerializer):
     recipes = serializers.PrimaryKeyRelatedField(many=True, queryset=Recipe.objects.all())

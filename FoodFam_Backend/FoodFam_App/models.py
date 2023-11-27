@@ -32,7 +32,11 @@ class RecipeIngredient(models.Model):
 
 class Recipe(models.Model):
     title = models.CharField(max_length=50)
-    ingredients = models.ManyToManyField('Ingredient', through='RecipeIngredient')
+    # I tried manytomany field below because a recipe can have many recipeingredients and a recipeingredient
+    # could be in many recipes. I think this is wrong. I think a foreignkey is a onetomany relationship. one recipe
+    # can have multiple recipeingredients.
+    #ingredients = models.ManyToManyField(('Ingredient', 'measurement_unit'), through='RecipeIngredient')
+    ingredients = models.ForeignKey(RecipeIngredient, related_name='recipe_ingredients', on_delete=models.CASCADE)
     instructions = models.TextField(max_length=4000)
     date_created = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
