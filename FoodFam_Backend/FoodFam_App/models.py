@@ -14,9 +14,15 @@ class Profile(models.Model):
 class Ingredient(models.Model):
     name = models.CharField(max_length=125)
 
+    def __str__(self):
+        return self.name
+
 
 class MeasurementUnit(models.Model):
     name = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.name
 
 class RecipeIngredient(models.Model):
     recipe = models.ForeignKey('Recipe', on_delete=models.CASCADE)
@@ -31,6 +37,9 @@ class Recipe(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
     owner = models.ForeignKey('auth.user', related_name='recipes', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.title
 
 
 class Comment(models.Model):
@@ -55,3 +64,6 @@ class Group(models.Model):
     # https://docs.djangoproject.com/en/4.2/topics/db/examples/many_to_many/
     admins = models.ManyToManyField('auth.user', related_name='group_admins')
     members = models.ManyToManyField('auth.user', related_name='group_members')
+
+    def __str__(self):
+        return self.group_name
