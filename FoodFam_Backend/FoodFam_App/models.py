@@ -25,8 +25,11 @@ class MeasurementUnit(models.Model):
         return self.name
 
 class RecipeIngredient(models.Model):
-    recipe = models.ForeignKey('Recipe', on_delete=models.CASCADE)
-    ingredient = models.ForeignKey('Ingredient', on_delete=models.CASCADE)
+    # ForeignKey fields represent a many-to-one relationship; many RecipeIngredients-to-one Recipe
+    # and many RecipeIngredients-to-one Ingredient and MeasurementUnit
+    # https://docs.djangoproject.com/en/4.2/topics/db/examples/many_to_one/
+    recipe = models.ForeignKey('Recipe', related_name='recipe_ingredients', on_delete=models.CASCADE)
+    ingredient = models.ForeignKey('Ingredient', related_name='ingredient', on_delete=models.CASCADE)
     measurement_unit = models.ForeignKey('MeasurementUnit', on_delete=models.CASCADE)
     quantity = models.IntegerField()
 
@@ -36,7 +39,7 @@ class Recipe(models.Model):
     # could be in many recipes. I think this is wrong. I think a foreignkey is a onetomany relationship. one recipe
     # can have multiple recipeingredients.
     #ingredients = models.ManyToManyField(('Ingredient', 'measurement_unit'), through='RecipeIngredient')
-    ingredients = models.ForeignKey(RecipeIngredient, related_name='recipe_ingredients', on_delete=models.CASCADE)
+    #ingredients = models.ForeignKey(RecipeIngredient, related_name='recipe_ingredients', on_delete=models.CASCADE)
     instructions = models.TextField(max_length=4000)
     date_created = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)

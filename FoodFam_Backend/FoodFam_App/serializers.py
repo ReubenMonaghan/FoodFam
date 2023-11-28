@@ -14,37 +14,38 @@ class MeasurementUnitSerializer(serializers.ModelSerializer):
 
 class RecipeIngredientSerializer(serializers.ModelSerializer):
     # ingredient and measurement_unit are nested serializers
-    #ingredient = IngredientSerializer(source='Ingredient', many=True)
-    bob = serializers.SerializerMethodField()
-
-    #measurement_unit = MeasurementUnitSerializer(many=True)
+    ingredient = IngredientSerializer()
+    # bob = serializers.SerializerMethodField()
+    #ingredient = serializers.StringRelatedField(many=True)
+    measurement_unit = MeasurementUnitSerializer()
     #measurement_units = serializers.SerializerMethodField()
     class Meta:
         model = RecipeIngredient
-        fields = ['id', 'bob'] # ['id', 'recipe', 'ingredient', 'measurement_unit', 'quantity', 'ingredient_items']
+        fields = ['id', 'recipe', 'ingredient', 'measurement_unit', 'quantity']
 
-    def get_bob(self, obj):
-        recipe_ingredients_query = Ingredient.objects.filter(id=obj.id)
+   # def get_bob(self, obj):
+    #    recipe_ingredients_query = Ingredient.objects.filter(id=obj.id)
         #measurement_units_query = MeasurementUnit.objects.filter(id=obj.id)
         #return self.measurement_unit
-        serializer = IngredientSerializer(recipe_ingredients_query, many=True)
+     #   serializer = IngredientSerializer(recipe_ingredients_query, many=True)
         #MeasurementUnitSerializer(measurement_units_query, many=True)
-        return serializer.data
+      #  return serializer.data
 
-    def get_measurement_units(self, obj):
-        measurement_units_query = MeasurementUnit.objects.filter(id=obj.id)
-        serializer = MeasurementUnitSerializer(measurement_units_query, many=True)
-        return serializer.data
+  #  def get_measurement_units(self, obj):
+   #     measurement_units_query = MeasurementUnit.objects.filter(id=obj.id)
+    #    serializer = MeasurementUnitSerializer(measurement_units_query, many=True)
+     #   return serializer.data
 
 class RecipeSerializer(serializers.ModelSerializer):
     owner = serializers.ReadOnlyField(source='owner.username')
     comments = serializers.PrimaryKeyRelatedField(many=True, queryset=Comment.objects.all())
     ratings = serializers.PrimaryKeyRelatedField(many=True, queryset=Rating.objects.all())
-    ingredients = RecipeIngredientSerializer(many=True)
+    recipe_ingredients = RecipeIngredientSerializer(many=True)
     class Meta:
         model = Recipe
-        fields = ['id', 'title', 'ingredients', 'instructions', 'date_created', 'date_updated',
+        fields = ['id', 'title', 'recipe_ingredients', 'instructions', 'date_created', 'date_updated',
                   'owner', 'comments', 'ratings']
+        depth = 3
 
 
 class UserSerializer(serializers.ModelSerializer):
