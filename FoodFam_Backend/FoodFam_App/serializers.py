@@ -24,7 +24,7 @@ class RecipeIngredientSerializer(serializers.ModelSerializer):
 
 class RecipeSerializer(serializers.ModelSerializer):
     owner = serializers.ReadOnlyField(source='owner.username')
-    comments = serializers.PrimaryKeyRelatedField(many=True, queryset=Comment.objects.all())
+    comments = serializers.PrimaryKeyRelatedField(many=True, queryset=Comment.objects.all().order_by('date_created'))
     ratings = serializers.PrimaryKeyRelatedField(many=True, queryset=Rating.objects.all())
     recipe_ingredients = RecipeIngredientSerializer(many=True)
     class Meta:
