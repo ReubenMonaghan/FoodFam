@@ -22,10 +22,27 @@ class RecipeIngredientSerializer(serializers.ModelSerializer):
         fields = ['id', 'recipe', 'ingredient', 'measurement_unit', 'quantity']
 
 
+class CommentSerializer(serializers.ModelSerializer):
+    user = serializers.ReadOnlyField(source='user.username')
+    recipe = serializers.ReadOnlyField(source='recipe.id')
+
+    class Meta:
+        model = Comment
+        fields = ['id', 'text', 'date_created', 'recipe', 'user']
+
+
+class RatingSerializer(serializers.ModelSerializer):
+    user = serializers.ReadOnlyField(source='user.username')
+    recipe = serializers.ReadOnlyField(source='recipe.id')
+    class Meta:
+        model = Rating
+        fields = ['id', 'rating', 'recipe', 'user']
+
+
 class RecipeSerializer(serializers.ModelSerializer):
     owner = serializers.ReadOnlyField(source='owner.username')
-    comments = serializers.PrimaryKeyRelatedField(many=True, queryset=Comment.objects.all().order_by('date_created'))
-    ratings = serializers.PrimaryKeyRelatedField(many=True, queryset=Rating.objects.all())
+    comments = CommentSerializer(many=True, read_only=True)
+    ratings = RatingSerializer(many=True, read_only=True)
     recipe_ingredients = RecipeIngredientSerializer(many=True)
     class Meta:
         model = Recipe
@@ -42,20 +59,10 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ['id', 'username', 'recipes', 'comments', 'ratings']
 
-class CommentSerializer(serializers.ModelSerializer):
-    user = serializers.ReadOnlyField(source='user.username')
-    recipe = serializers.ReadOnlyField(source='recipe.id')
-    class Meta:
-        model = Comment
-        fields = ['id', 'text', 'date_created', 'recipe', 'user']
 
 
-class RatingSerializer(serializers.ModelSerializer):
-    user = serializers.ReadOnlyField(source='user.username')
-    recipe = serializers.ReadOnlyField(source='recipe.id')
-    class Meta:
-        model = Rating
-        fields = ['id', 'rating', 'recipe', 'user']
+
+
 
 
 class GroupSerializer(serializers.ModelSerializer):

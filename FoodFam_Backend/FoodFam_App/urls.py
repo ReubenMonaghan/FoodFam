@@ -9,6 +9,7 @@ from FoodFam_App import views
 router = DefaultRouter()
 router.register(r'recipes', views.RecipeViewSet,basename="recipe")
 router.register(r'users', views.UserViewSet,basename="user")
+router.register(r'groups', views.GroupViewSet,basename="group")
 
 # The API URLs are now determined automatically by the router.
 # Additionally, we include the login URLs for the browsable API.
