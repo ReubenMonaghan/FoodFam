@@ -1,8 +1,9 @@
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
-
+from statistics import mean
 
 # Create your models here.
+
 
 class Profile(models.Model):
     # use auth_user for username, password, email and other details in the table.
@@ -10,6 +11,7 @@ class Profile(models.Model):
     #Learing oppertunity, use AWS S3 to store images.
     profile_picture = models.ImageField(upload_to='profile_pictures/')
     user = models.ForeignKey('auth.user', related_name='profile', on_delete=models.CASCADE)
+
 
 class Ingredient(models.Model):
     name = models.CharField(max_length=125)
@@ -24,6 +26,7 @@ class MeasurementUnit(models.Model):
     def __str__(self):
         return self.name
 
+
 class RecipeIngredient(models.Model):
     # ForeignKey fields represent a many-to-one relationship; many RecipeIngredients-to-one Recipe
     # and many RecipeIngredients-to-one Ingredient and MeasurementUnit
@@ -32,6 +35,7 @@ class RecipeIngredient(models.Model):
     ingredient = models.ForeignKey('Ingredient', related_name='ingredient', on_delete=models.CASCADE)
     measurement_unit = models.ForeignKey('MeasurementUnit', on_delete=models.CASCADE)
     quantity = models.IntegerField()
+
 
 class Recipe(models.Model):
     title = models.CharField(max_length=50)
@@ -42,6 +46,10 @@ class Recipe(models.Model):
 
     def __str__(self):
         return self.title
+
+    def recipe_rating(self):
+        ratings = [x.rating for x in self.ratings.all()]
+        return mean(ratings)
 
 
 class Comment(models.Model):
