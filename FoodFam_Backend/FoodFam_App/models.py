@@ -51,6 +51,10 @@ class Recipe(models.Model):
         ratings = [x.rating for x in self.ratings.all()]
         return mean(ratings)
 
+    def recipe_comments(self):
+        comments = [x.text for x in self.comments.all()]
+        return comments
+
 
 class Comment(models.Model):
     # check the on_delete settings for these
