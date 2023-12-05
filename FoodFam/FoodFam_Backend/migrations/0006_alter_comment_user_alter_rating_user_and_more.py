@@ -9,7 +9,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('FoodFam_App', '0005_users'),
+        ('FoodFam_Backend', '0005_users'),
     ]
 
     operations = [

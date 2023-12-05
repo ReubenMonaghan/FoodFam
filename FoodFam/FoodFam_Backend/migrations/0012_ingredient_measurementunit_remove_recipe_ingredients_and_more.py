@@ -7,7 +7,7 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('FoodFam_App', '0011_alter_recipe_instructions'),
+        ('FoodFam_Backend', '0011_alter_recipe_instructions'),
     ]
 
     operations = [
@@ -34,14 +34,14 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('quantity', models.IntegerField()),
-                ('ingredient', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='FoodFam_App.ingredient')),
-                ('measurement_unit', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='FoodFam_App.measurementunit')),
-                ('recipe', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='FoodFam_App.recipe')),
+                ('ingredient', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='FoodFam_Backend.ingredient')),
+                ('measurement_unit', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='FoodFam_Backend.measurementunit')),
+                ('recipe', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='FoodFam_Backend.recipe')),
             ],
         ),
         migrations.AddField(
             model_name='recipe',
             name='ingredients',
-            field=models.ManyToManyField(through='FoodFam_App.RecipeIngredient', to='FoodFam_App.ingredient'),
+            field=models.ManyToManyField(through='FoodFam_Backend.RecipeIngredient', to='FoodFam_Backend.ingredient'),
         ),
     ]

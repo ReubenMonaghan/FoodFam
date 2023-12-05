@@ -6,7 +6,7 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('FoodFam_App', '0013_remove_recipe_ingredients_recipe_ingredients'),
+        ('FoodFam_Backend', '0013_remove_recipe_ingredients_recipe_ingredients'),
     ]
 
     operations = [

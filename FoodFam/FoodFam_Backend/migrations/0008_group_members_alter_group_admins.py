@@ -8,7 +8,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('FoodFam_App', '0007_alter_comment_recipe_alter_rating_recipe'),
+        ('FoodFam_Backend', '0007_alter_comment_recipe_alter_rating_recipe'),
     ]
 
     operations = [

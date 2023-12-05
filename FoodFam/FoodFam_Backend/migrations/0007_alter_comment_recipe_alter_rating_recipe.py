@@ -7,18 +7,18 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('FoodFam_App', '0006_alter_comment_user_alter_rating_user_and_more'),
+        ('FoodFam_Backend', '0006_alter_comment_user_alter_rating_user_and_more'),
     ]
 
     operations = [
         migrations.AlterField(
             model_name='comment',
             name='recipe',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='comments', to='FoodFam_App.recipe'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='comments', to='FoodFam_Backend.recipe'),
         ),
         migrations.AlterField(
             model_name='rating',
             name='recipe',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='ratings', to='FoodFam_App.recipe'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='ratings', to='FoodFam_Backend.recipe'),
         ),
     ]

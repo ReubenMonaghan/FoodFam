@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('FoodFam_App', '0004_alter_comment_user_alter_group_admins_and_more'),
+        ('FoodFam_Backend', '0004_alter_comment_user_alter_group_admins_and_more'),
     ]
 
     operations = [

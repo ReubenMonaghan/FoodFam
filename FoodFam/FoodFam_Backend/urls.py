@@ -3,7 +3,7 @@ from rest_framework.urlpatterns import format_suffix_patterns
 from rest_framework.routers import DefaultRouter
 from django.urls import path
 
-from FoodFam_App import views
+from FoodFam_Backend import views
 
 # Create a router and register our viewsets with it.
 router = DefaultRouter()

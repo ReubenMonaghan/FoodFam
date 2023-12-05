@@ -7,18 +7,18 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('FoodFam_App', '0014_remove_recipe_ingredients'),
+        ('FoodFam_Backend', '0014_remove_recipe_ingredients'),
     ]
 
     operations = [
         migrations.AlterField(
             model_name='recipeingredient',
             name='ingredient',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='ingredient', to='FoodFam_App.ingredient'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='ingredient', to='FoodFam_Backend.ingredient'),
         ),
         migrations.AlterField(
             model_name='recipeingredient',
             name='recipe',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='recipe_ingredients', to='FoodFam_App.recipe'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='recipe_ingredients', to='FoodFam_Backend.recipe'),
         ),
     ]
