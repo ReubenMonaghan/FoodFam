@@ -7,9 +7,10 @@ from FoodFam_Backend import views
 
 # Create a router and register our viewsets with it.
 router = DefaultRouter()
-router.register(r'recipes', views.RecipeViewSet,basename="recipe")
-router.register(r'users', views.UserViewSet,basename="user")
-router.register(r'groups', views.GroupViewSet,basename="group")
+router.register(r'recipes', views.RecipeViewSet, basename="recipe")
+router.register(r'users', views.UserViewSet, basename="user")
+router.register(r'groups', views.GroupViewSet, basename="group")
+router.register(r'comments', views.CommentViewSet, basename="comment")
 
 # The API URLs are now determined automatically by the router.
 # Additionally, we include the login URLs for the browsable API.
